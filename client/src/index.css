@@ -1,0 +1,40 @@
+/* fonts  */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer utilities {
+  .pause-animation {
+    animation-play-state: paused;
+  }
+  .myBtn-1 {
+    @apply rounded-sm border-black border-[1.2px]  text-black    py-[2px] px-2
+  }
+  .myBoxShadow-1 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
+  }
+}
+* {
+  scroll-behavior: smooth;
+}
+
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  overflow-x: hidden;
+  text-transform: capitalize;
+}
+
+.slide {
+  animation: scroll 10s linear infinite;
+}
+
+@keyframes scroll {
+  
+  to {
+    transform: translateX(-100%);
+  }
+}
