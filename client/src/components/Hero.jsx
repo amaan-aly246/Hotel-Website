@@ -6,7 +6,7 @@ import SearchFilter from "./SearchFilter"
 function Hero() {
   return (
     <>
-      <main className="  mt-5 mx-6 w-[95%]  grid lg:grid-cols-[70%_30%] lg:grid-rows-[3em_auto] gap-x-3 gap-y-3">
+      <main className="  mt-5 mx-14 w-[95%]  grid lg:grid-cols-[70%_29%] lg:grid-rows-[3em_auto] gap-x-3 gap-y-3">
         <nav className=" gap-2  ">
           <SearchFilter />
         </nav>
@@ -31,11 +31,13 @@ function Hero() {
           <button className="bg-my-bgColor1 text-xl w-[7em]">Book</button>
         </section>
         {/* Booking summary for large screen size  */}
-        <aside className="  row-start-1 row-end-3 col-start-2 border-[#f8f0f0] border-2  text-[0.98em] font-serif mr-12 divide-y-2   hidden lg:block  ">
-          <h1 className="bg-my-bgColor2  py-2 text-center sticky top-[4.2em] ">
+        <aside className="  row-start-1 row-end-3 col-start-2 border-[#f8f0f0] border-2  text-[0.98em] font-serif mr-12 divide-y-2   hidden lg:block     sticky top-16 h-[35em] overflow-y-scroll overflow-x-hidden">
+          <h1 className="bg-my-bgColor2  py-2 text-center  ">
             Booking Summary
           </h1>
        
+          <BookingSummary />
+          <BookingSummary />
           <BookingSummary />
         
         </aside>

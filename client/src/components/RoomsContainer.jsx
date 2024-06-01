@@ -12,12 +12,13 @@ function RoomsContainer() {
         <div className="grow divide-y-2 divide-red-400 rounded-sm border-[1.3px] p-2   myBoxShadow-1 ">
           <div className="flex justify-between">
             <h1 className="text-my-bgColor1 text-[1.3rem] ">
-              60% Discount-Deluxe Double/Twin Room Only
+              60% Discount-Deluxe Double/Twin Room Only random words here
             </h1>
-            <p className="bg-my-bgColor1 w-20 h-7 text-white font-bold pl-2 ">
-              <i class="fa-solid fa-tag mr-2"></i>
-              Deal
-            </p>
+            <div className="flex justify-start gap-2 items-center p-2 bg-my-bgColor1 w-20 h-7 text-white font-bold   normal-case ">
+              <i class="fa-solid fa-tag "></i>
+
+              <span>Deal</span>
+            </div>
           </div>
 
           <div className="flex justify-between py-4 b">
@@ -37,11 +38,13 @@ function RoomsContainer() {
             </div>
             {/* right */}
             <div>
-              <span className="font-bold">&#8377; </span>
-              <s>5,479.00</s>
+              <p className=" flex gap-1">
+                <span className="font-bold">&#8377; </span>
+                <s>5,479.00</s>
+              </p>
+
               <p className="text-my-bgColor1 text-3xl  font-bold">
-                <span className=" ">&#8377; </span>
-                <span>2,191.60</span>
+                <span>&#8377; 2,191.60</span>
               </p>
               <p className="font-light text-sm ">price for 1 night</p>
               <p className="font-light text-sm ">2 adults, 1 child, 1 room</p>
@@ -96,7 +99,6 @@ function RoomsContainer() {
           </div>
         </div>
       </div>
-      
     </>
   )
 }

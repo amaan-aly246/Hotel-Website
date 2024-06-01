@@ -4,7 +4,7 @@ function Navigation() {
   return (
     <section
       className=" flex w-full justify-between bg-my-bgColor1 text-white  font-roboto-condensed
-      cursor-pointer sticky top-0
+      cursor-pointer sticky top-0 z-50
     ">
       <span className="ml-3 mt-4 text-3xl">BEST HOTELS </span>
       <nav>
