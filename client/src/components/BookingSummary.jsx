@@ -5,10 +5,9 @@ function BookingSummary() {
     <>
       <section className="p-3 divide-y-[1px] divide-my-bgColor2   ">
         {/* date */}
-        <p className=" flex  justify-start gap-5 ">
+        <p className=" flex  justify-start gap-2 flex-wrap">
           <span className=" font-bold">Dates </span>
-          <span> 30/05/2024 </span>
-          <span>-</span>
+          <span> 30/05/2024 -</span>
           <span>31/05/2024</span>
         </p>
 
@@ -43,8 +42,6 @@ function BookingSummary() {
             <span>1,431.60</span>
           </p>
         </div>
-
-        
 
         {/*  total amount area */}
         <p className="flex justify-between font-bold text-xl mt-2">

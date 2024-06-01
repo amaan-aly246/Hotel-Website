@@ -6,11 +6,11 @@ import SearchFilter from "./SearchFilter"
 function Hero() {
   return (
     <>
-      <main className="  mt-5 mx-14 w-[95%]  grid lg:grid-cols-[70%_29%] lg:grid-rows-[3em_auto] gap-x-3 gap-y-3">
+      <main className="  mt-5 mx-3 sm:mx-14 w-[95%]  grid lg:grid-cols-[70%_29%] lg:grid-rows-[3em_auto] gap-x-3 gap-y-3">
         <nav className=" gap-2  ">
           <SearchFilter />
         </nav>
-        <section className="bg-slate-200  p-4 h-fit mb-10">
+        <section className="bg-slate-200  p-4 h-fit mb-10 ">
           <RoomsContainer />
           <RoomsContainer />
           <RoomsContainer />
@@ -35,11 +35,8 @@ function Hero() {
           <h1 className="bg-my-bgColor2  py-2 text-center  ">
             Booking Summary
           </h1>
-       
           <BookingSummary />
-          <BookingSummary />
-          <BookingSummary />
-        
+            
         </aside>
       </main>
     </>
