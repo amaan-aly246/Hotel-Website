@@ -3,7 +3,7 @@ import React from "react"
 function BookingSummary() {
   return (
     <>
-      <section className="p-3 divide-y-[1px] divide-my-bgColor2 sticky top-[6.6em]  ">
+      <section className="p-3 divide-y-[1px] divide-my-bgColor2   ">
         {/* date */}
         <p className=" flex  justify-start gap-5 ">
           <span className=" font-bold">Dates </span>
@@ -23,7 +23,7 @@ function BookingSummary() {
             <i class="fa-regular fa-pen-to-square text-my-bgColor1"></i>
           </p>
 
-          <p className=" text-right">
+          <p className=" flex justify-end gap-1 ">
             <span>&#8377; </span>
             <span>1,431.60</span>
           </p>

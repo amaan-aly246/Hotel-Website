@@ -22,7 +22,9 @@
 body::-webkit-scrollbar {
   display: none;
 }
-
+aside::-webkit-scrollbar{
+  display: none;
+}
 body {
   overflow-x: hidden;
   text-transform: capitalize;
