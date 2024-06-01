@@ -43,7 +43,7 @@ function RoomsContainer() {
                 <s>5,479.00</s>
               </p>
 
-              <p className="text-my-bgColor1 text-3xl  font-bold">
+              <p className="text-my-bgColor1 text-2xl sm:text-3xl  font-bold">
                 <span>&#8377; 2,191.60</span>
               </p>
               <p className="font-light text-sm ">price for 1 night</p>
@@ -51,7 +51,7 @@ function RoomsContainer() {
             </div>
           </div>
 
-          {/* part 3 */}
+          {/* room info */}
           <div className="flex justify-between ">
             <div className=" mt-3 cursor-pointer">
               <span>
@@ -59,7 +59,7 @@ function RoomsContainer() {
               </span>
               <span className="text-my-bgColor1 ml-2">Room info </span>
             </div>
-            <div className="">
+            <div className=" text-sm">
               <span className="text-my-bgColor1 mr-3">only 1 room left</span>
               <button className=" myBtn-1">
                 <i class="fa-solid fa-minus "></i>
