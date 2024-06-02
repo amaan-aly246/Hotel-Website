@@ -4,9 +4,10 @@ import { images } from "../constants/constants"
 function ImageSlider() {
   return (
     <>
+    {/* slide className */}
       <section className=" h-60  sm:h-72 w-full whitespace-nowrap group  overflow-x-hidden ">
         <div
-          className={` slide h-full  inline-block  group-hover:pause-animation  `}>
+          className={`  h-full  inline-block  group-hover:pause-animation  `}>
           {images.map((img) => {
             return (
               <img
@@ -20,7 +21,7 @@ function ImageSlider() {
         </div>
 
         <div
-          className={` slide h-full max-w-fit  inline-block  group-hover:pause-animation `}>
+          className={`  h-full max-w-fit  inline-block  group-hover:pause-animation `}>
           {images.map((img) => {
             return (
               <img
