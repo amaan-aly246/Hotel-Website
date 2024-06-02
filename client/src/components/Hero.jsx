@@ -11,9 +11,9 @@ function Hero() {
           <SearchFilter />
         </nav>
         <section className="bg-slate-200  p-4 h-fit mb-10 ">
-          <RoomsContainer />
-          <RoomsContainer />
-          <RoomsContainer />
+          <RoomsContainer id = "21" />
+          <RoomsContainer id = "24"/>
+          <RoomsContainer  id = "25" />
         </section>
 
         {/* Booking summary for small scree size  */}
