@@ -4,21 +4,21 @@ import { images } from "../constants/constants"
 function ImageSlider() {
   return (
     <>
-      <section className="   h-72 w-[140em] whitespace-nowrap group overflow-clip ">
+      <section className=" h-60  sm:h-72 w-full whitespace-nowrap group  overflow-x-hidden ">
         <div
-          className={` slide h-full max-w-fit  inline-block  group-hover:pause-animation  `} >
+          className={` slide h-full  inline-block  group-hover:pause-animation  `}>
           {images.map((img) => {
             return (
               <img
                 src={img.src}
                 alt={img.id}
                 key={img.id}
-                className="h-full  inline-block"
+                className="h-full  inline-block w-[16em]"
               />
             )
           })}
         </div>
-        {/* slide class */}
+
         <div
           className={` slide h-full max-w-fit  inline-block  group-hover:pause-animation `}>
           {images.map((img) => {
@@ -27,7 +27,7 @@ function ImageSlider() {
                 src={img.src}
                 alt={img.id}
                 key={img.id}
-                className="h-full  inline-block"
+                className="h-full  inline-block w-[16em]"
               />
             )
           })}
