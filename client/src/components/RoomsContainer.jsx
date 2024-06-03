@@ -56,8 +56,8 @@ function RoomsContainer({ id }) {
             </div>
 
             {/* right */}
-            <div>
-              <s className="font-bold flex gap-1">
+            <div className="text-right">
+              <s className="font-bold text-right">
                 &#8377; {formatPrice(roomPricePreDiscount)}
               </s>
 
