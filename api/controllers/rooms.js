@@ -34,7 +34,7 @@ const getSpecificRoom = async (req, res) => {
 const getAllRooms = async (req, res) => {
     try {
         const room = await Rooms.find({});
-        if (room.length >0) {
+        if (room.length > 0) {
             return res.status(200).json({ room });
 
         }
@@ -63,7 +63,11 @@ const deleteRoom = async (req, res) => {
 const deleteAllRoom = async (req, res) => {
     try {
         const result = await Rooms.deleteMany({});
-        return res.send(200).send(`&{result.deleteCount} rooms deleted`)
+        if (result.deletedCount > 0) {
+            return res.sendStatus(200).send(`${result.deletedCount} rooms deleted`)
+
+        }
+        res.sendStatus(200).send("Nothing to delete ")
     } catch (error) {
         res.status(500).json({ msg: error });
 

@@ -9,11 +9,6 @@ const roomsSchema = new mongoose.Schema({
 
         minLength: [3]
     },
-    roomId: {
-        type: String,
-        require: true,
-
-    },
     deal: {
         type: Number,
         required: false,
@@ -25,22 +20,27 @@ const roomsSchema = new mongoose.Schema({
     },
     capacity: {
         adult: {
-            type: String,
+            type: Number,
             required: true,
             default: 2
 
         },
         child: {
-            type: String,
+            type: Number,
             required: true,
             default: 1
-
         }
     },
     booked: {
         type: Boolean,
         required: true,
         default: false,
+    },
+    totalNoOfRooms: {
+        type: Number,
+        require: true,
+        default: 3
+        
     }
 })
 

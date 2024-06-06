@@ -1,7 +1,8 @@
 
-export const addRoom = (event, noOfRooms) => {
-    // const roomsContainer = event.target.parentElement.parentElement.parentElement
+export const addRoom = (event , noOfRooms) => {
     const roomsContainer = event.target.closest('#roomsContainer')
+    const roomId = roomsContainer.parentElement.id;
+
     const section = document.createElement('section');
     section.classList = "flex gap-2 py-4"
     section.innerHTML = `

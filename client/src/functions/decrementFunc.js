@@ -4,7 +4,11 @@ export const decrementFunc = (event, setNoOfRooms, noOfRooms, setRoomStatus, max
   setRoomPricePreDiscount,
   setRoomPricePostDiscount,
   roomBasePrice1,
-  roomBasePrice2) => {
+  roomBasePrice2,
+  roomId,
+  setBookingSummaryComponent,
+  bookingSummaryComponent) => {
+    
   const roomStatusElement =
     event.currentTarget.parentElement.previousElementSibling
   roomStatusElement.classList.add("text-green-500")
@@ -28,6 +32,8 @@ export const decrementFunc = (event, setNoOfRooms, noOfRooms, setRoomStatus, max
       return prevValue
     }
   })
-  removeRoom(event)
+  removeRoom(event, noOfRooms, roomId,
+    setBookingSummaryComponent,
+    bookingSummaryComponent)
 
 }
