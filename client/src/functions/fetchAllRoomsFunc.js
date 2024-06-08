@@ -1,6 +1,8 @@
 import axios from 'axios';
+import baseurl from '../baseurl/baseurl';
 export const fetchAllRoomsFunc = async () => {
-    const response = await axios.get('http://localhost:8000/rooms/all');
+
+    const response = await baseurl.get('/all');
   
     return response.data.room;
     
