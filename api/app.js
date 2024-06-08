@@ -6,7 +6,7 @@ import rooms from "./routes/rooms.js";
 config()
 const app = express();
 const port = process.env.PORT 
-import allowedOrigins from "./config/allowedOrigins.js";
+import {allowedOrigins} from "./config/allowedOrigins.js";
 // middleware 
 app.use(express.json())
 app.use(cors({credentials: true, origin: (origin, callback)=>{

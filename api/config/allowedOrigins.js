@@ -1,4 +1,4 @@
-export default allowedOrigins = [
+export const allowedOrigins = [
 
     'https://hotel-websit.vercel.app'
 ]
