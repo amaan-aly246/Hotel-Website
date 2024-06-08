@@ -8,7 +8,7 @@ export const decrementFunc = (event, setNoOfRooms, noOfRooms, setRoomStatus, max
   roomId,
   setBookingSummaryComponent,
   bookingSummaryComponent) => {
-    
+
   const roomStatusElement =
     event.currentTarget.parentElement.previousElementSibling
   roomStatusElement.classList.add("text-green-500")
@@ -21,8 +21,32 @@ export const decrementFunc = (event, setNoOfRooms, noOfRooms, setRoomStatus, max
       setRoomStatus(`Hurry ! ${max - (prevValue - 1)} rooms left`)
       setNoOfAdults(noOfAdults - 2)
       setNoOfChild(noOfChild - 1)
-      setRoomPricePreDiscount(parseFloat(roomPricePreDiscount) - parseFloat(roomBasePrice1.current))
-      setRoomPricePostDiscount(parseFloat(roomPricePostDiscount) - parseFloat(roomBasePrice2.current))
+      const updatedRoomPricePreDiscount = parseFloat(roomPricePreDiscount) - parseFloat(roomBasePrice1.current)
+      const updatedRoomPricePostDiscount = parseFloat(roomPricePostDiscount) - parseFloat(roomBasePrice2.current)
+      setRoomPricePostDiscount(updatedRoomPricePostDiscount)
+      setRoomPricePreDiscount(updatedRoomPricePreDiscount)
+      setBookingSummaryComponent((prevComponents) => {
+        const updatedComponents = prevComponents.map((component) => {
+          if (component.id === roomId) {
+            // console.log(component);
+            return {
+              ...component,
+              content: {
+                ...component.content,
+                props: {
+                  ...component.content.props,
+                  roomInfo: {
+                    ...component.content.props.roomInfo,
+                    roomPricePostDiscount: updatedRoomPricePostDiscount,
+                  },
+                },
+              },
+            };
+          }
+          return component;
+        });
+        return updatedComponents;
+      });
       return prevValue - 1
 
     } else {
@@ -35,5 +59,7 @@ export const decrementFunc = (event, setNoOfRooms, noOfRooms, setRoomStatus, max
   removeRoom(event, noOfRooms, roomId,
     setBookingSummaryComponent,
     bookingSummaryComponent)
+
+
 
 }

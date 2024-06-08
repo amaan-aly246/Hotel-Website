@@ -181,8 +181,9 @@ function RoomsContainer({ index }) {
                         setRoomPricePostDiscount,
                         roomBasePrice1,
                         roomBasePrice2,
+                        setBookingSummaryComponent,
+                        roomId
                       )
-                      // handleClick()
                     }}>
                     <i className="fa-solid fa-plus"></i>
                   </button>

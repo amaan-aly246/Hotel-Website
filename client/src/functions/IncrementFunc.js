@@ -1,5 +1,4 @@
 import { addRoom } from "../functions/addRoom.js"
-import BookingSummary from "../components/BookingSummary.jsx"
 
 export const IncrementFunc = (event, noOfRooms, setNoOfRooms, totalNoOfRooms, setRoomStatus, noOfAdults, noOfChild, setNoOfAdults, setNoOfChild, roomPricePreDiscount,
     roomPricePostDiscount,
@@ -7,6 +6,8 @@ export const IncrementFunc = (event, noOfRooms, setNoOfRooms, totalNoOfRooms, se
     setRoomPricePostDiscount,
     roomBasePrice1,
     roomBasePrice2,
+    setBookingSummaryComponent,
+    roomId
 ) => {
 
     const roomStatusElement =
@@ -33,6 +34,31 @@ export const IncrementFunc = (event, noOfRooms, setNoOfRooms, totalNoOfRooms, se
         setRoomPricePostDiscount(updatedRoomPricePostDiscount)
         setRoomPricePreDiscount(updatedRoomPricePreDiscount)
         addRoom(event, noOfRooms)
+
+        setBookingSummaryComponent((prevComponents) => {
+          const updatedComponents = prevComponents.map((component) => {
+            if (component.id === roomId) {
+              // console.log(component);
+              return {
+                ...component,
+                content: {
+                  ...component.content,
+                  props: {
+                    ...component.content.props,
+                    roomInfo: {
+                      ...component.content.props.roomInfo,
+                      roomPricePostDiscount: updatedRoomPricePostDiscount,
+                    },
+                  },
+                },
+              };
+            }
+            return component;
+          });
+          return updatedComponents;
+        });
        
     }
 }
+
+
