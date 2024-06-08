@@ -1,56 +1,56 @@
-import React from "react"
+import { React, useContext } from "react"
+import { removeBookingRoom } from "../functions/removeBookingRoom.js"
+import RoomInfoContext from "../context/RoomInfoContext.jsx"
 
-function BookingSummary() {
+function BookingSummary({ roomInfo }) {
+  const {
+    capacity,
+    roomPricePostDiscount,
+    deal,
+    roomId,
+    title,
+  
+    setPrice,
+  } = roomInfo
+  const { setBookingSummaryComponent, bookingSummaryComponent } =
+    useContext(RoomInfoContext)
+
   return (
     <>
-      <section className="p-3 divide-y-[1px] divide-my-bgColor2   ">
-        {/* date */}
-        <p className=" flex  justify-start gap-2 flex-wrap">
-          <span className=" font-bold">Dates </span>
-          <span> 30/05/2024 -</span>
-          <span>31/05/2024</span>
-        </p>
-
+      <section id={roomId} className="px-3   ">
         {/* room info */}
         <div className="my-6">
           <p className="flex justify-between ">
-            <span>60% Discount- Double/ Twin</span>
-            <i class="fa-solid fa-xmark text-my-bgColor1 cursor-pointer"></i>
+            {deal > 0 ? (
+              <span>{`${deal}% ${title}`}</span>
+            ) : (
+              <span> {` ${title}`}</span>
+            )}
+            <button
+              onClick={() =>
+                removeBookingRoom(
+                  roomId,
+                  setBookingSummaryComponent,
+                  bookingSummaryComponent
+                )
+              }>
+              <i className="fa-solid fa-xmark text-my-bgColor1 cursor-pointer"></i>
+            </button>
           </p>
-          <p className="flex justify-between mt-2">
-            <span> 2 adults, 1 child, 1 room </span>
-            <i class="fa-regular fa-pen-to-square text-my-bgColor1"></i>
+          <p className="flex justify-between mt-2 normal-case">
+            <span>
+              {`${capacity.adult} adults, ${capacity.child} child, 1 room`}
+            </span>
+            <button>
+              <i className="fa-regular fa-pen-to-square text-my-bgColor1"></i>
+            </button>
           </p>
 
           <p className=" flex justify-end gap-1 ">
             <span>&#8377; </span>
-            <span>1,431.60</span>
+            <span>{`${roomPricePostDiscount}`}</span>
           </p>
         </div>
-        <div className="my-6">
-          <p className="flex justify-between ">
-            <span>60% Discount- Double/ Twin</span>
-            <i class="fa-solid fa-xmark text-my-bgColor1 cursor-pointer"></i>
-          </p>
-          <p className="flex justify-between mt-2">
-            <span> 2 adults, 1 child, 1 room </span>
-            <i class="fa-regular fa-pen-to-square text-my-bgColor1"></i>
-          </p>
-
-          <p className=" text-right">
-            <span>&#8377; </span>
-            <span>1,431.60</span>
-          </p>
-        </div>
-
-        {/*  total amount area */}
-        <p className="flex justify-between font-bold text-xl mt-2">
-          <span className="font-thin">Total </span>
-          <span>&#8377; 3,431.60</span>
-        </p>
-        <button className="bg-my-bgColor1 text-[#fcf6f6] mt-4 mx-6 w-[15em] h-[2.5em]">
-          Book
-        </button>
       </section>
     </>
   )

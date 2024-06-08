@@ -1,36 +1,64 @@
 import { addRoom } from "../functions/addRoom.js"
 
-
-export const IncrementFunc = (event, noOfRooms, setNoOfRooms, max, setRoomStatus, noOfAdults, noOfChild, setNoOfAdults, setNoOfChild, roomPricePreDiscount,
+export const IncrementFunc = (event, noOfRooms, setNoOfRooms, totalNoOfRooms, setRoomStatus, noOfAdults, noOfChild, setNoOfAdults, setNoOfChild, roomPricePreDiscount,
     roomPricePostDiscount,
     setRoomPricePreDiscount,
     setRoomPricePostDiscount,
     roomBasePrice1,
-    roomBasePrice2
+    roomBasePrice2,
+    setBookingSummaryComponent,
+    roomId
 ) => {
 
     const roomStatusElement =
         event.currentTarget.parentElement.previousElementSibling
 
-    if (noOfRooms != max) {
+    if (noOfRooms != totalNoOfRooms) {
         setNoOfRooms((prevValue) => {
-            if (prevValue + 1 >= max) {
+            if (prevValue + 1 >= totalNoOfRooms) {
                 roomStatusElement.classList.remove("text-green-500")
                 roomStatusElement.classList.add("text-my-bgColor1")
                 setRoomStatus("No room left")
 
                 return prevValue + 1
             } else {
-                setRoomStatus(`Hurry ! ${max - (prevValue + 1)} rooms left`)
+                setRoomStatus(`Hurry ! ${totalNoOfRooms - (prevValue + 1)} rooms left`)
                 return prevValue + 1
             }
 
         })
-        addRoom(event, noOfRooms)
-
         setNoOfAdults(noOfAdults + 2)
         setNoOfChild(noOfChild + 1)
-        setRoomPricePreDiscount(parseFloat(roomBasePrice1.current) + parseFloat(roomPricePreDiscount))
-        setRoomPricePostDiscount(parseFloat(roomBasePrice2.current) + parseFloat(roomPricePostDiscount))
+        const updatedRoomPricePreDiscount = parseFloat(roomBasePrice1.current) + parseFloat(roomPricePreDiscount)
+        const updatedRoomPricePostDiscount = parseFloat(roomBasePrice2.current) + parseFloat(roomPricePostDiscount)
+        setRoomPricePostDiscount(updatedRoomPricePostDiscount)
+        setRoomPricePreDiscount(updatedRoomPricePreDiscount)
+        addRoom(event, noOfRooms)
+
+        setBookingSummaryComponent((prevComponents) => {
+          const updatedComponents = prevComponents.map((component) => {
+            if (component.id === roomId) {
+              // console.log(component);
+              return {
+                ...component,
+                content: {
+                  ...component.content,
+                  props: {
+                    ...component.content.props,
+                    roomInfo: {
+                      ...component.content.props.roomInfo,
+                      roomPricePostDiscount: updatedRoomPricePostDiscount,
+                    },
+                  },
+                },
+              };
+            }
+            return component;
+          });
+          return updatedComponents;
+        });
+       
     }
 }
+
+

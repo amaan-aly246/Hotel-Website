@@ -1,5 +1,15 @@
-export const removeRoom = (event) => {
-    const roomsContainer = event.target.closest('#roomsContainer')
-    roomsContainer.lastChild.remove();
+import { removeBookingRoom } from "./removeBookingRoom";
 
+export const removeRoom = (event, noOfRooms, roomId,
+    setBookingSummaryComponent,
+    bookingSummaryComponent,
+    ) => {
+    const roomsContainer = event.currentTarget.closest('#roomsContainer')
+    roomsContainer.lastChild.remove();
+    if (noOfRooms == 1) {
+        // remove that room from the Booking summary component on the right
+        removeBookingRoom(roomId,
+            setBookingSummaryComponent,
+            bookingSummaryComponent);
+    }
 }

@@ -1,25 +1,66 @@
-import { React, useState, useRef } from "react"
+import { React, useState, useRef, useContext, useEffect } from "react"
 import { IncrementFunc } from "../functions/IncrementFunc.js"
 import { decrementFunc } from "../functions/decrementFunc.js"
 import { formatPrice } from "../functions/formatPrice.js"
 import { addRoom } from "../functions/addRoom.js"
-function RoomsContainer({ id }) {
-  const max = 3
+import BookingSummary from "../components/BookingSummary.jsx"
+import RoomInfoContext from "../context/RoomInfoContext.jsx"
+
+function RoomsContainer({ index }) {
+  const { setBookingSummaryComponent, bookingSummaryComponent, roomsData } =
+    useContext(RoomInfoContext)
+  const [noOfRooms, setNoOfRooms] = useState(1)
+
+  const {
+    capacity,
+    _id: roomId,
+    price,
+    title,
+    deal,
+    totalNoOfRooms,
+  } = roomsData[index]
 
   const [isRoomSelected, setIsRoomSelected] = useState(false)
-  const [noOfRooms, setNoOfRooms] = useState(1)
-  const [roomStatus, setRoomStatus] = useState(`Hurry ! ${max} rooms left`)
-  const [roomPricePreDiscount, setRoomPricePreDiscount] = useState(4579.03)
-  const [roomPricePostDiscount, setRoomPricePostDiscount] = useState(1831.6)
-  const [noOfAdults, setNoOfAdults] = useState(2)
-  const [noOfChild, setNoOfChild] = useState(1)
+  const [roomStatus, setRoomStatus] = useState(
+    `Hurry ! ${totalNoOfRooms} rooms left`
+  )
+  const [roomPricePreDiscount, setRoomPricePreDiscount] = useState(price)
+  const [noOfAdults, setNoOfAdults] = useState(capacity.adult)
+  const [noOfChild, setNoOfChild] = useState(capacity.child)
+  const [roomPricePostDiscount, setRoomPricePostDiscount] = useState(
+    price - price * (deal / 100)
+  )
   const roomBasePrice1 = useRef(roomPricePreDiscount)
-
   const roomBasePrice2 = useRef(roomPricePostDiscount)
+  const handleAddRoom = (event) => {
+    setIsRoomSelected(true)
+    setRoomStatus("Hurry ! 2 rooms left")
+    addRoom(event, noOfRooms)
+
+    setBookingSummaryComponent((prevComponents) => [
+      ...prevComponents,
+      {
+        id: roomId,
+        content: (
+          <BookingSummary
+            key={roomId}
+            roomInfo={{
+              capacity,
+              totalNoOfRooms,
+              deal,
+              roomPricePostDiscount,
+              roomId,
+              title,
+            }}
+          />
+        ),
+      },
+    ])
+  }
 
   return (
     <>
-      <div id={id} className=" flex gap-4 justify-between mb-6">
+      <div id={roomId} className=" flex gap-4 justify-between mb-6">
         <img
           src="/assets/images/img1.jpg"
           alt="img1"
@@ -29,14 +70,16 @@ function RoomsContainer({ id }) {
           id="roomsContainer"
           className="grow divide-y-2 divide-red-400 rounded-sm border-[1.3px] p-2   myBoxShadow-1 ">
           <div className="flex justify-between">
-            <h1 className="text-my-bgColor1 text-[1.3rem] ">
-              60% Discount-Deluxe Double/Twin Room Only random words here
-            </h1>
-            <div className="flex justify-start gap-2 items-center p-2 bg-my-bgColor1 w-20 h-7 text-white font-bold   normal-case ">
-              <i className="fa-solid fa-tag "></i>
+            <h1 className="text-my-bgColor1 text-[1.3rem] ">{title}</h1>
+            {deal > 0 ? (
+              <div className="flex justify-start gap-2 items-center p-2 bg-my-bgColor1 w-20 h-7 text-white font-bold   normal-case ">
+                <i className="fa-solid fa-tag "></i>
 
-              <span>Deal</span>
-            </div>
+                <span>Deal</span>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
 
           <div className="flex justify-between py-4 b">
@@ -44,22 +87,31 @@ function RoomsContainer({ id }) {
             <div className=" text-sm ">
               <p>
                 <span>Room capacity :</span>
-                <span>3 </span>
+                <span>{capacity.adult} </span>
                 <i className="fa-solid fa-person text-2xl mr-2"></i>
-                <span>2</span>
+                <span>{capacity.child}</span>
                 <i className="fa-solid fa-baby text-xl ml-1"></i>
               </p>
               <p>Room rates exclusive of tax</p>
-              <p className="text-green-600">Rate includes : 60% discount !</p>
+              {deal > 0 ? (
+                <p className="text-green-600">{`Rate includes : ${deal}% discount !`}</p>
+              ) : (
+                <p className="text-green-600">{`Rate includes :`}</p>
+              )}
+
               <p className="font-light text-sm">Extra adult rate : 400</p>
               <p className="font-light text-sm">extra child rate : 400</p>
             </div>
 
             {/* right */}
             <div className="text-right">
-              <s className="font-bold text-right">
-                &#8377; {formatPrice(roomPricePreDiscount)}
-              </s>
+              {deal > 0 ? (
+                <s className="font-bold text-right">
+                  &#8377; {formatPrice(roomPricePreDiscount)}
+                </s>
+              ) : (
+                <></>
+              )}
 
               <p className="text-my-bgColor1 text-2xl sm:text-3xl  font-bold">
                 &#8377; {formatPrice(roomPricePostDiscount)}
@@ -79,18 +131,18 @@ function RoomsContainer({ id }) {
             </div>
 
             <div className=" text-sm flex ">
-              <span className="text-green-500 mx-2 ">{roomStatus}</span>
+              <span className="text-green-500 mx-2  ">{roomStatus}</span>
               {isRoomSelected && (
-                <div>
+                <div className="flex myBtn-1 gap-x-1 ">
                   <button
-                    className=" myBtn-1"
+                    className=" "
                     onClick={(event) => {
                       decrementFunc(
                         event,
                         setNoOfRooms,
                         noOfRooms,
                         setRoomStatus,
-                        max,
+                        totalNoOfRooms,
                         setIsRoomSelected,
                         noOfAdults,
                         noOfChild,
@@ -101,23 +153,23 @@ function RoomsContainer({ id }) {
                         setRoomPricePreDiscount,
                         setRoomPricePostDiscount,
                         roomBasePrice1,
-                        roomBasePrice2
+                        roomBasePrice2,
+                        roomId,
+                        setBookingSummaryComponent,
+                        bookingSummaryComponent
                       )
-                     
                     }}>
                     <i className="fa-solid fa-minus "></i>
                   </button>
-                  <span className="myBtn-1  font-normal mx-2 ">
-                    {noOfRooms}
-                  </span>
+                  <span className="  font-normal mx-2 ">{noOfRooms}</span>
                   <button
-                    className="myBtn-1"
+                    className=""
                     onClick={(event) => {
                       IncrementFunc(
                         event,
                         noOfRooms,
                         setNoOfRooms,
-                        max,
+                        totalNoOfRooms,
                         setRoomStatus,
                         noOfAdults,
                         noOfChild,
@@ -128,7 +180,9 @@ function RoomsContainer({ id }) {
                         setRoomPricePreDiscount,
                         setRoomPricePostDiscount,
                         roomBasePrice1,
-                        roomBasePrice2
+                        roomBasePrice2,
+                        setBookingSummaryComponent,
+                        roomId
                       )
                     }}>
                     <i className="fa-solid fa-plus"></i>
@@ -140,9 +194,7 @@ function RoomsContainer({ id }) {
                 <button
                   className=" bg-red-600 myBtn-2  mx-2 "
                   onClick={(event) => {
-                    setIsRoomSelected(true)
-                    setRoomStatus("Hurry ! 2 rooms left")
-                    addRoom(event, noOfRooms)
+                    handleAddRoom(event)
                   }}>
                   Add Room
                 </button>
@@ -158,32 +210,3 @@ function RoomsContainer({ id }) {
 }
 
 export default RoomsContainer
-
-// {isRoomSelected && (
-//   <section className="flex gap-2 py-4">
-//     <h5 className="text-sm font-thin mt-3 mr-2">
-//       Room
-//       <span> {noOfRooms} </span>
-//     </h5>
-//     <div>
-//       <label>Adult </label>
-//       <select name="adult" id="adult">
-//         <option value="1">1</option>
-//         <option value="2" defaultValue={2}>
-//           2
-//         </option>
-//       </select>
-//       <span className="block text-sm font-thin">(12+years)</span>
-//     </div>
-//     <div>
-//       <label>child </label>
-//       <select name="child" id="child">
-//         <option value="1">1</option>
-//         <option value="2" defaultValue={2}>
-//           2
-//         </option>
-//       </select>
-//       <span className="block text-sm font-thin">(0-12 years)</span>
-//     </div>
-//   </section>
-// )}
