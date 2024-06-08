@@ -9,7 +9,8 @@ const port = process.env.PORT
 
 // middleware 
 app.use(express.json())
-app.use(cors({credentials: true, origin: 'http://localhost:5173'}));
+// app.use(cors({credentials: true, origin: 'http://localhost:5173'}));
+app.use(cors({credentials: true, origin: 'https://hotel-website-amaan.vercel.app/'}));
 
 //Routes 
 app.use('/rooms' , rooms);
