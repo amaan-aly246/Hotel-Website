@@ -1,4 +1,4 @@
 export default allowedOrigins = [
 
-    'https://hotel-websit.vercel.app/'
+    'https://hotel-websit.vercel.app'
 ]
