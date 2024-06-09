@@ -9,9 +9,6 @@ const userSignUp = async (req, res) => {
         if (mail) {
             res.status(400).send("user already exists ");
         }
-        // const newUser = await Users.create({ username: req.body.username });
-        // await Users.create({mail: req.body.mail})
-
         const salt = bcrypt.genSaltSync(saltRound);
         const password = bcrypt.hashSync(req.body.password, salt);
         const userData = {
