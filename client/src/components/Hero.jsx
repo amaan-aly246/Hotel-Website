@@ -56,7 +56,7 @@ function Hero() {
                   roomPricePostDiscount,
                   totalNoOfRooms,
                 } = item.content.props.roomInfo
-                // console.log(item.content)
+                
                 return (
                   <div id={roomId} className="flex justify-between  ">
                     <div className=" basis-[14em] normal-case ">
@@ -99,11 +99,10 @@ function Hero() {
                 <i className="fa-solid fa-info pt-7" onClick={handleOpen}></i>
                 <span>
                   <p className="text-my-bgColor1 font-bold text-xl">
-                    {" "}
-                    Rs 2,600
+                    {totalAmount}
                   </p>
                   <p className="text-green-400">
-                    {`${bookingSummaryComponent.length}  Room Added`}{" "}
+                    {`${bookingSummaryComponent.length}  Room Added`}
                   </p>
                   <p>
                     <span>31/05/2024 - </span> <span>01/06/2024</span>

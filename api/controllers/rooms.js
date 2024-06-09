@@ -19,10 +19,10 @@ const getSpecificRoom = async (req, res) => {
     try {
         const { roomId } = req.query;
         if (roomId) {
-            const room = await Rooms.find({ roomId });
+            const room = await Rooms.find({ _id : roomId});
             if (room.length > 0)
                 return res.status(200).json({ room });
-            res.status(200).send({ message: "Wrong roomId" })
+            res.status(404).send({ message: "Wrong roomId" })
 
         }
     } catch (error) {
@@ -49,7 +49,7 @@ const getAllRooms = async (req, res) => {
 const deleteRoom = async (req, res) => {
     try {
         const { roomId } = req.query
-        const room = await Rooms.findOneAndDelete({ roomId });
+        const room = await Rooms.findOneAndDelete({ _id: roomId });
         if (!room) {
             return res.status(404).json({ msg: `No room with id:${roomId}` })
         }

@@ -3,25 +3,33 @@ import cors from 'cors'
 import connectDB from "./database/connect.js";
 import { config } from 'dotenv';
 import rooms from "./routes/rooms.js";
-config()
+import users from "./routes/users.js"
+
+config() // load environment variables
+
 const app = express();
-const port = process.env.PORT 
-import {allowedOrigins} from "./config/allowedOrigins.js";
+const port = process.env.PORT
+import { allowedOrigins } from "./config/allowedOrigins.js";
 // middleware 
 app.use(express.json())
-app.use(cors({credentials: true, origin: (origin, callback)=>{
-    if(allowedOrigins.indexOf(origin) !== -1 || !origin){
-        callback(null);
+app.use(cors({
+    credentials: true, origin: (origin, callback) => {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        }
+        else {
+            callback(new Error('Not allowed by CORS'))
+        }
     }
-    else{
-        callback(new Error ('Not allowed by CORS'))
-    }
-}}));
+}));
 
 
 
 //Routes 
-app.use('/rooms' , rooms);
+
+app.use('/api', rooms);
+app.use('/api', users)
+
 
 const start = async () => {
     try {

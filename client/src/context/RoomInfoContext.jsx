@@ -9,13 +9,18 @@ export const RoomInfoProvider = ({ children }) => {
   const [roomsData, setRoomsData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [totalAmount, setTotalAmount] = useState(0)
- const [price, setPrice] = useState(0);
- 
+
+
   useEffect(() => {
     const fetchData = async () => {
-      const rooms = await fetchAllRoomsFunc()
-      setRoomsData(rooms)
-      setIsLoading(false)
+      try {
+        const rooms = await fetchAllRoomsFunc()
+        setRoomsData(rooms)
+        setIsLoading(false)
+      } catch (error) {
+        // console.log(error.message);
+        throw new Error(error.message);
+      }
     }
 
     fetchData()
@@ -31,7 +36,7 @@ export const RoomInfoProvider = ({ children }) => {
         setRoomsData,
         totalAmount,
         setTotalAmount,
-        price,
+        
       }}>
       {children}
     </RoomInfoContext.Provider>
