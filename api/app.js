@@ -4,7 +4,7 @@ import connectDB from "./database/connect.js";
 import { config } from 'dotenv';
 import rooms from "./routes/rooms.js";
 import users from "./routes/users.js"
-
+import auth from './routes/auth.js'
 config() // load environment variables
 
 const app = express();
@@ -28,7 +28,8 @@ app.use(cors({
 //Routes 
 
 app.use('/api', rooms);
-app.use('/api', users)
+app.use('/api', users);
+app.use('/api', auth);
 
 
 const start = async () => {
