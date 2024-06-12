@@ -58,7 +58,7 @@ const login = async (req, res) => {
                 { new: true } // return updated value
             )
             res.cookie('refresh token', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 100 }) // 1 day in milliseconds 
-            res.json({ 'accessToken': accessToken });
+            res.json({ 'accessToken': accessToken , 'username ' : foundUser.username });
         }
         else {
             res.sendStatus(401);
