@@ -1,6 +1,8 @@
 import Users from "../models/users.js"
 import bcrypt from 'bcrypt';
-
+import jwt from 'jsonwebtoken';
+import { config } from "dotenv";
+config();
 const saltRound = 10;
 const signup = async (req, res) => {
     try {
@@ -24,7 +26,7 @@ const signup = async (req, res) => {
 
 }
 
-const logout = async (req, res )=>{
+const logout = async (req, res) => {
     return res.send("logout ");
 }
 
@@ -40,7 +42,23 @@ const login = async (req, res) => {
         const match = await bcrypt.compareSync(password, foundUser.password);
         if (match) {
             // create jwt token
-            return res.json({ 'success': `User ${foundUser.username} is logged in ` });
+            const accessToken = jwt.sign(
+                { "username": foundUser.username }, // payload
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: '30s' }
+            )
+            const refreshToken = jwt.sign(
+                { "username": foundUser.username }, // payload
+                process.env.REFRESH_TOKEN_SECRET, // secret 
+                { expiresIn: '1d' } // expire date
+            );
+            await Users.findOneAndUpdate(
+                { mail: foundUser.mail }, // filter 
+                { refreshToken: refreshToken }, // update
+                { new: true } // return updated value
+            )
+            res.cookie('refresh token', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 100 }) // 1 day in milliseconds 
+            res.json({ 'accessToken': accessToken });
         }
         else {
             res.sendStatus(401);
@@ -80,8 +98,9 @@ const deleteUser = async (req, res) => {
 const deleteAllUsers = async (req, res) => {
     try {
         const count = await Users.deleteMany({});
-        if (count > 0) {
-            return res.status(200).json({ message: ` ${count} number of users deleted!` })
+
+        if (count.deletedCount > 0) {
+            return res.status(200).json({ message: ` ${count.deletedCount}  users deleted!` })
         }
         return res.status(204).json({ message: "No users to delete " });
     } catch (error) {

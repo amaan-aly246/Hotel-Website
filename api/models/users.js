@@ -18,7 +18,8 @@ const userSchema = new mongoose.Schema({
         min: 3
     },
     refreshToken: {
-        type: String
+        type: String,
+        default : ''
     }
 })
 
