@@ -63,7 +63,26 @@ const login = async (req, res) => {
     }
 }
 const logout = async (req, res) => {
-    return res.send("logout ");
+    try {
+        const cookies = req.cookies;
+        if (!cookies?.jwt) return res.sendStatus(204); // success but no content to send
+        const refreshToken = cookies.jwt;
+
+        // is refreshToken present in db
+        const foundUser = await Users.findOne({ refreshToken });
+        if (!foundUser) {
+            res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+            return res.sendStatus(204);
+        }
+
+        // Delete the refreshToken from the db
+        await Users.findOneAndUpdate({ refreshToken: ' ' });
+        res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+        res.sendStatus(204)
+    } catch (error) {
+        console.log(error?.message);
+        res.sendStatus(500);
+    }
 }
 
 const refreshToken = async (req, res) => {
@@ -90,6 +109,7 @@ const refreshToken = async (req, res) => {
                     { expiresIn: '30s' }
                 );
                 res.json({ accessToken });
+
             }
         );
     } catch (error) {
