@@ -1,6 +1,6 @@
 import Users from "../models/users.js"
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import jwt, { decode } from 'jsonwebtoken';
 import { config } from "dotenv";
 config();
 const saltRound = 10;
@@ -52,7 +52,7 @@ const login = async (req, res) => {
                 { refreshToken: refreshToken }, // update
                 { new: true } // return updated value
             )
-            res.cookie('refresh token', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 100 }) // 1 day in milliseconds 
+            res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 100 }) // 1 day in milliseconds 
             res.json({ 'accessToken': accessToken, 'username ': foundUser.username });
         }
         else {
@@ -66,8 +66,40 @@ const logout = async (req, res) => {
     return res.send("logout ");
 }
 
+const refreshToken = async (req, res) => {
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.status(401).send("Unauthorized");
+
+    const refreshToken = cookies.jwt;
+
+    try {
+        const foundUser = await Users.findOne({ refreshToken });
+
+        if (!foundUser) return res.sendStatus(403); // forbidden
+
+        // evaluate jwt
+        jwt.verify(
+            refreshToken,
+            process.env.REFRESH_TOKEN_SECRET,
+            (err, decoded) => {
+                if (err || foundUser.username !== decoded.username) return res.sendStatus(403);
+                // jwt verification done, now issue new access_token
+                const accessToken = jwt.sign(
+                    { "username": decoded.username },
+                    process.env.ACCESS_TOKEN_SECRET,
+                    { expiresIn: '30s' }
+                );
+                res.json({ accessToken });
+            }
+        );
+    } catch (error) {
+        console.log(error?.message);
+        res.sendStatus(500);
+    }
+};
 export {
     signup,
     login,
-    logout
+    logout,
+    refreshToken
 }

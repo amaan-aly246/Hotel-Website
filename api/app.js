@@ -1,6 +1,7 @@
 import express from "express"
 import cors from 'cors'
 import connectDB from "./database/connect.js";
+import cookieParser from "cookie-parser";
 import { config } from 'dotenv';
 import rooms from "./routes/rooms.js";
 import users from "./routes/users.js"
@@ -10,8 +11,9 @@ config() // load environment variables
 const app = express();
 const port = process.env.PORT
 import { allowedOrigins } from "./config/allowedOrigins.js";
-// middleware 
+// build-in middleware for json 
 app.use(express.json())
+// cores middleware
 app.use(cors({
     credentials: true, origin: (origin, callback) => {
         if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
@@ -22,6 +24,8 @@ app.use(cors({
         }
     }
 }));
+// cookie-parser middleware 
+app.use(cookieParser());
 
 
 
