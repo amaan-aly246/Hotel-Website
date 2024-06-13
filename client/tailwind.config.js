@@ -14,6 +14,7 @@ export default {
       colors: {
         'my-bgColor1': '#DC143C',
         'my-bgColor2': '#dedede',
+        'my-bgColor3': '#800f2f',
       },
     },
   },
