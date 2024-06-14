@@ -7,7 +7,7 @@ export const removeRoom = (event, noOfRooms, roomId,
     const roomsContainer = event.currentTarget.closest('#roomsContainer')
     roomsContainer.lastChild.remove();
     if (noOfRooms == 1) {
-        // remove that room from the Booking summary component on the right
+        // remove  room from the Booking summary component on the right
         removeBookingRoom(roomId,
             setBookingSummaryComponent,
             bookingSummaryComponent);

@@ -13,6 +13,9 @@ function Hero() {
     totalAmount,
     setTotalAmount,
     setBookingSummaryComponent,
+    noOfAdults,
+    noOfChild,
+    noOfRooms,
   } = useContext(RoomInfoContext)
 
   useEffect(() => {
@@ -51,7 +54,7 @@ function Hero() {
               {bookingSummaryComponent.map((item) => {
                 const {
                   title,
-                  capacity,
+                
                   roomId,
                   roomPricePostDiscount,
                   totalNoOfRooms,
@@ -62,16 +65,16 @@ function Hero() {
                     <div className=" basis-[14em] normal-case ">
                       <p className="capitalize">{title} </p>
                       <p>
-                        {capacity.adult} adults,{capacity.child} child, 1 room
+                        {noOfAdults} adults,{noOfChild} child, 1 room
                       </p>
                     </div>
 
                     <div className=" basis-[8em] flex justify-between gap-2  items-center">
                       <span className="font-bold">
-                        {" "}
+                        
                         &#8377; {roomPricePostDiscount}
                       </span>
-                      <span
+                      {/* <span
                         onClick={(event) => {
                           removeBookingRoom(
                             roomId,
@@ -87,7 +90,7 @@ function Hero() {
                           )
                         }}>
                         <i className="fa-solid fa-trash text-my-bgColor1"></i>
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 )
@@ -99,7 +102,7 @@ function Hero() {
                 <i className="fa-solid fa-info pt-7" onClick={handleOpen}></i>
                 <span>
                   <p className="text-my-bgColor1 font-bold text-xl">
-                    {totalAmount}
+                  &#8377; {totalAmount}
                   </p>
                   <p className="text-green-400">
                     {`${bookingSummaryComponent.length}  Room Added`}

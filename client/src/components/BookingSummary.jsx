@@ -9,7 +9,6 @@ function BookingSummary({ roomInfo }) {
     deal,
     roomId,
     title,
-  
     setPrice,
   } = roomInfo
   const { setBookingSummaryComponent, bookingSummaryComponent } =

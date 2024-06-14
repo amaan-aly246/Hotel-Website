@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import {togglePasswordViewState} from "../functions/togglePasswordViewState.js"
 import { handleSetDetails } from "../functions/handleSetDetails.js"
+import { NavLink } from "react-router-dom"
+
 function Register() {
     const [userDetails, setUserDetails] = useState({
         username: "",
@@ -20,7 +22,7 @@ function Register() {
                 Register
               </header>
               <form className="flex flex-col j text-xl gap-3 text-center m-3 mx-10 text-my-bgColor2">
-                <span className=" border p-2 rounded focus-within:border-2">
+                <span className=" border p-2 rounded focus-within:outline focus-within:outline-2">
                   <i className="fa-regular fa-user"></i>
                   <input
                     type="text"
@@ -35,7 +37,7 @@ function Register() {
                     className=" outline-none ml-2 bg-my-bgColor3"
                   />
                 </span>
-                <span className="border p-2 rounded focus-within:border-2">
+                <span className="border p-2 rounded focus-within:outline focus-within:outline-2">
                   <i className="fa-regular fa-envelope"></i>
                   <input
                     type="email"
@@ -48,7 +50,7 @@ function Register() {
                     className="bg-my-bgColor3 outline-none ml-2"
                   />
                 </span>
-                <span className=" border p-2 rounded focus-within:border-2 relative">
+                <span className="border p-2 rounded focus-within:outline focus-within:outline-2 relative">
                   <i className="fa-solid fa-lock"></i>
                   <input
                     type="password"
@@ -71,7 +73,7 @@ function Register() {
                 </button>
               </form>
               <p className=" normal-case self-center text-my-bgColor2 ">
-                Already registered? <a className="">Login </a> then.
+                Already registered? <NavLink to={"/login"} className="">Login </NavLink> then.
               </p>
             </section>
           </div>

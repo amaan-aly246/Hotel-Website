@@ -9,8 +9,9 @@ export const RoomInfoProvider = ({ children }) => {
   const [roomsData, setRoomsData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [totalAmount, setTotalAmount] = useState(0)
+  const [noOfChild, setNoOfChild] = useState()
 
-
+  const [noOfAdults, setNoOfAdults] = useState()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,7 +20,7 @@ export const RoomInfoProvider = ({ children }) => {
         setIsLoading(false)
       } catch (error) {
         // console.log(error.message);
-        throw new Error(error.message);
+        throw new Error(error.message)
       }
     }
 
@@ -36,7 +37,11 @@ export const RoomInfoProvider = ({ children }) => {
         setRoomsData,
         totalAmount,
         setTotalAmount,
-        
+        noOfAdults,
+        setNoOfAdults,
+        noOfChild,
+        setNoOfChild,
+     
       }}>
       {children}
     </RoomInfoContext.Provider>

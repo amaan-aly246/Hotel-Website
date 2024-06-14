@@ -1,12 +1,18 @@
-import Login from "./components/Login"
+import Navigation from "./components/Navigation"
+import Login from "./components/login"
 import Main from "./pages/Main"
 import RegisterPage from "./pages/RegisterPage"
+import { Route, Routes } from "react-router-dom"
 function App() {
   return (
     <>
-      {/* <Main ></Main> */}
-     {/* <RegisterPage/> */}
-     <Login/>
+      <Routes>
+        <Route element={<Navigation />}>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/" element={<Main />}></Route>
+          <Route path="/register" element={<RegisterPage />}></Route>
+        </Route>
+      </Routes>
     </>
   )
 }

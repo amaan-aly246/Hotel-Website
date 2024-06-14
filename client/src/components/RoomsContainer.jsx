@@ -7,10 +7,16 @@ import BookingSummary from "../components/BookingSummary.jsx"
 import RoomInfoContext from "../context/RoomInfoContext.jsx"
 
 function RoomsContainer({ index }) {
-  const { setBookingSummaryComponent, bookingSummaryComponent, roomsData } =
-    useContext(RoomInfoContext)
+  const {
+    setBookingSummaryComponent,
+    bookingSummaryComponent,
+    roomsData,
+    noOfAdults,
+    setNoOfAdults,
+    noOfChild,
+    setNoOfChild,
+  } = useContext(RoomInfoContext)
   const [noOfRooms, setNoOfRooms] = useState(1)
-
   const {
     capacity,
     _id: roomId,
@@ -25,8 +31,7 @@ function RoomsContainer({ index }) {
     `Hurry ! ${totalNoOfRooms} rooms left`
   )
   const [roomPricePreDiscount, setRoomPricePreDiscount] = useState(price)
-  const [noOfAdults, setNoOfAdults] = useState(capacity.adult)
-  const [noOfChild, setNoOfChild] = useState(capacity.child)
+
   const [roomPricePostDiscount, setRoomPricePostDiscount] = useState(
     price - price * (deal / 100)
   )
@@ -57,6 +62,12 @@ function RoomsContainer({ index }) {
       },
     ])
   }
+
+  useEffect(() => {
+    setNoOfAdults(capacity.adult)
+    setNoOfChild(capacity.child)
+    // setNoOfRooms()
+  }, [])
 
   return (
     <>

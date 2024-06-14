@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { togglePasswordViewState } from "../functions/togglePasswordViewState.js"
 import { handleSetDetails } from "../functions/handleSetDetails.js"
+import { NavLink } from "react-router-dom"
 
 function Login() {
   const [userDetails, setUserDetails] = useState({
@@ -10,7 +11,7 @@ function Login() {
   })
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(userDetails)
+    // console.log(userDetails)
   }
   return (
     <>
@@ -22,7 +23,7 @@ function Login() {
           <form className="flex flex-col j text-xl gap-3 text-center m-3 mx-10 text-my-bgColor2">
             
            
-            <span className="border p-2 rounded focus-within:border-2">
+            <span className="border p-2 rounded focus-within:outline focus-within:outline-2">
               <i className="fa-regular fa-envelope"></i>
               <input
                 type="email"
@@ -35,7 +36,7 @@ function Login() {
                 className="bg-my-bgColor3 outline-none ml-2"
               />
             </span>
-            <span className=" border p-2 rounded focus-within:border-2 relative">
+            <span className=" border p-2 rounded focus-within:outline focus-within:outline-2 relative">
               <i className="fa-solid fa-lock"></i>
               <input
                 type="password"
@@ -58,7 +59,7 @@ function Login() {
             </button>
           </form>
           <p className=" normal-case self-center text-my-bgColor2 ">
-            New User? <a className="">Register </a> then.
+            New User? <NavLink to="/register" className="">Register </NavLink> then.
           </p>
         </section>
       </div>
