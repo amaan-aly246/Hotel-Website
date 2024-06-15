@@ -1,17 +1,45 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { togglePasswordViewState } from "../functions/togglePasswordViewState.js"
 import { handleSetDetails } from "../functions/handleSetDetails.js"
 import { NavLink } from "react-router-dom"
-
+import AuthContext from '../context/AuthProvider.jsx'
+import axios from "../baseurl/axios.js"
 function Login() {
+  const { setAuth } = useContext(AuthContext)
+
   const [userDetails, setUserDetails] = useState({
-  
     email: "",
     password: "",
   })
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     // console.log(userDetails)
+    try {
+      const response = await axios.post('/login',
+        JSON.stringify(userDetails),
+        {
+          headers: { 'Content-Type': "application/json"},
+          withCredentials: true
+        }
+      )
+      if(response){
+        console.log(JSON.stringify(response.data));
+        const {accessToken, username} = response.data
+        setAuth({accessToken, username , email})
+      }
+    } catch (error) {
+      if(!error.response){
+        alert("No server response" );
+        console.log(`error message : ${error.message} `);
+      }
+      else if (error.response.status === 401 ){
+        alert(`Unauthorized`)
+      }
+      else{
+        alert("login failed");
+        console.log('error message: ' , error.message)
+      }
+    }
   }
   return (
     <>
@@ -21,8 +49,6 @@ function Login() {
             Login
           </header>
           <form className="flex flex-col j text-xl gap-3 text-center m-3 mx-10 text-my-bgColor2">
-            
-           
             <span className="border p-2 rounded focus-within:outline focus-within:outline-2">
               <i className="fa-regular fa-envelope"></i>
               <input
@@ -59,7 +85,11 @@ function Login() {
             </button>
           </form>
           <p className=" normal-case self-center text-my-bgColor2 ">
-            New User? <NavLink to="/register" className="">Register </NavLink> then.
+            New User?{" "}
+            <NavLink to="/register" className="">
+              Register{" "}
+            </NavLink>{" "}
+            then.
           </p>
         </section>
       </div>

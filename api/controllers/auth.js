@@ -4,21 +4,21 @@ import jwt, { decode } from 'jsonwebtoken';
 import { config } from "dotenv";
 config();
 const saltRound = 10;
-const signup = async (req, res) => {
+const register = async (req, res) => {
     try {
-        const mail = await Users.findOne({ mail: req.body.mail });
-        if (mail) {
-            return res.status(400).send("user already exists ");
+        const email = await Users.findOne({ email: req.body.email });
+        if (email) {
+            return res.sendStatus(409) // user already exist
         }
         const salt = bcrypt.genSaltSync(saltRound);
         const password = bcrypt.hashSync(req.body.password, salt);
         const userData = {
             "username": req.body.username,
-            "mail": req.body.mail,
+            "email": req.body.email,
             "password": password
         }
         await Users.create(userData)
-        return res.status(201).json({ message: `user is created successfully ` });
+        return res.sendStatus(201).json({ message: `user is created successfully ` });
     } catch (error) {
         console.log(error?.message);
 
@@ -27,8 +27,8 @@ const signup = async (req, res) => {
 }
 const login = async (req, res) => {
     try {
-        const { mail, password } = req.body;
-        const foundUser = await Users.findOne({ mail });
+        const { email, password } = req.body;
+        const foundUser = await Users.findOne({ email });
 
         if (!foundUser) return res.sendStatus(401) // unauthorized
 
@@ -48,12 +48,12 @@ const login = async (req, res) => {
                 { expiresIn: '1d' } // expire date
             );
             await Users.findOneAndUpdate(
-                { mail: foundUser.mail }, // filter 
+                { email: foundUser.email }, // filter 
                 { refreshToken: refreshToken }, // update
                 { new: true } // return updated value
             )
             res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 100 }) // 1 day in milliseconds 
-            res.json({ 'accessToken': accessToken, 'username ': foundUser.username });
+            res.json({ 'accessToken': accessToken, 'username ': foundUser.username , 'email': foundUser.email });
         }
         else {
             res.sendStatus(401);
@@ -118,7 +118,7 @@ const refreshToken = async (req, res) => {
     }
 };
 export {
-    signup,
+    register,
     login,
     logout,
     refreshToken

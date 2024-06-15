@@ -8,7 +8,7 @@ import {
 } from "../controllers/users.js";
 import verifyJWT from '../middleware/verifyJWT.js'
 
-router.route('/all-users').get(verifyJWT,getAllUsers).delete(deleteAllUsers);
+router.route('/all-users').get(getAllUsers).delete(deleteAllUsers);
 router.route('/user').delete(deleteUser);
 
 export default router 

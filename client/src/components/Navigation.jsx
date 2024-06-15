@@ -1,5 +1,5 @@
 import { React, useRef, useState } from "react"
-import { NavLink, Outlet } from "react-router-dom"
+import { NavLink, Outlet  } from "react-router-dom"
 function Navigation() {
   const [hidden, setHidden] = useState(true)
 

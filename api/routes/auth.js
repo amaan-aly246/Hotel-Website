@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 import {
-    signup,
+    register,
     login,
     logout,
     refreshToken
@@ -9,8 +9,8 @@ import {
 
 
 router.route('/logout').get(logout);
-router.route('/login').get(login)
-router.route('/signup').post(signup);
+router.route('/login').post(login)
+router.route('/register').post(register);
 router.route('/refresh').get(refreshToken);
 
 export default router 
