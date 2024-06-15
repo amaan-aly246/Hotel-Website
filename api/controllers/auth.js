@@ -1,6 +1,6 @@
 import Users from "../models/users.js"
-import bcrypt from 'bcrypt';
-import jwt, { decode } from 'jsonwebtoken';
+import bcrypt, { compareSync } from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { config } from "dotenv";
 config();
 const saltRound = 10;
@@ -30,7 +30,9 @@ const login = async (req, res) => {
         const { email, password } = req.body;
         const foundUser = await Users.findOne({ email });
 
+        if(email.length == 0 || password.length ==0) return res.sendStatus(404)// credentials missing
         if (!foundUser) return res.sendStatus(401) // unauthorized
+
 
         // evaluate password
 
@@ -52,14 +54,19 @@ const login = async (req, res) => {
                 { refreshToken: refreshToken }, // update
                 { new: true } // return updated value
             )
-            res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 100 }) // 1 day in milliseconds 
-            res.json({ 'accessToken': accessToken, 'username ': foundUser.username , 'email': foundUser.email });
+            res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }) // 1 day in milliseconds 
+                .status(200)
+                .json({ 'accessToken': accessToken, 'username': foundUser.username, 'email': foundUser.email });
+
+            
         }
         else {
             res.sendStatus(401);
+           
         }
     } catch (error) {
-        console.log(error?.message)
+        console.log(error.message)
+       
     }
 }
 const logout = async (req, res) => {

@@ -1,9 +1,8 @@
 import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { togglePasswordViewState } from "../functions/togglePasswordViewState.js"
 import { handleSetDetails } from "../functions/handleSetDetails.js"
-import { NavLink } from "react-router-dom"
-import axios from "../baseurl/axios.js"
+import { NavLink,useNavigate } from "react-router-dom"
+import { register } from "../functions/register.js"
 
 function Register() {
   const [userDetails, setUserDetails] = useState({
@@ -12,38 +11,6 @@ function Register() {
     password: "",
   })
   const navigate = useNavigate();
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-    // console.log(userDetails)
-    try {
-      const response = await axios.post(
-        "/register",
-        JSON.stringify(userDetails),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      )
-
-      if (response.status === 201) {
-        alert(`${userDetails.username} is successfully created`)
-        setTimeout(() => {
-          navigate('/login')
-        }, 2000);
-      }
-      console.log(response.data)
-    } catch (error) {
-      if (!error?.response) {
-        alert("No server Response")
-      } else if (error.response?.status === 409) {
-        alert(
-          `User with mail "${userDetails.email}" already exist. Use different mail for registration`
-        )
-      } else {
-        alert("registration failed")
-      }
-    }
-  }
   return (
     <>
       <div className="bg-[#c9184a]  h-screen ">
@@ -98,7 +65,10 @@ function Register() {
             <button
               className="text-my-bgColor2  p-2 w-[8em] self-center bg-[#c9184a]  hover:border-slate-100 border rounded border-my-bgColor3 "
               type="submit"
-              onClick={handleSubmit}>
+              onClick={(event)=>{
+                event.preventDefault();
+                register(userDetails, navigate)
+              }}>
               Register{" "}
             </button>
           </form>

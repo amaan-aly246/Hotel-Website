@@ -74,7 +74,7 @@ function Hero() {
                         
                         &#8377; {roomPricePostDiscount}
                       </span>
-                      {/* <span
+                      <span
                         onClick={(event) => {
                           removeBookingRoom(
                             roomId,
@@ -90,7 +90,7 @@ function Hero() {
                           )
                         }}>
                         <i className="fa-solid fa-trash text-my-bgColor1"></i>
-                      </span> */}
+                      </span>
                     </div>
                   </div>
                 )

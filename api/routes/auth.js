@@ -8,7 +8,7 @@ import {
 } from "../controllers/auth.js";
 
 
-router.route('/logout').get(logout);
+router.route('/logout').post(logout);
 router.route('/login').post(login)
 router.route('/register').post(register);
 router.route('/refresh').get(refreshToken);

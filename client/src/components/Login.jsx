@@ -1,46 +1,17 @@
 import React, { useState, useContext } from "react"
 import { togglePasswordViewState } from "../functions/togglePasswordViewState.js"
 import { handleSetDetails } from "../functions/handleSetDetails.js"
-import { NavLink } from "react-router-dom"
-import AuthContext from '../context/AuthProvider.jsx'
-import axios from "../baseurl/axios.js"
+import { NavLink , useNavigate } from "react-router-dom"
+import AuthContext from "../context/AuthProvider.jsx"
+import { login } from "../functions/login.js"
 function Login() {
+  const navigate = useNavigate();
   const { setAuth } = useContext(AuthContext)
-
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
   })
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-    // console.log(userDetails)
-    try {
-      const response = await axios.post('/login',
-        JSON.stringify(userDetails),
-        {
-          headers: { 'Content-Type': "application/json"},
-          withCredentials: true
-        }
-      )
-      if(response){
-        console.log(JSON.stringify(response.data));
-        const {accessToken, username} = response.data
-        setAuth({accessToken, username , email})
-      }
-    } catch (error) {
-      if(!error.response){
-        alert("No server response" );
-        console.log(`error message : ${error.message} `);
-      }
-      else if (error.response.status === 401 ){
-        alert(`Unauthorized`)
-      }
-      else{
-        alert("login failed");
-        console.log('error message: ' , error.message)
-      }
-    }
-  }
+
   return (
     <>
       <div className="bg-[#c9184a]  h-screen ">
@@ -80,7 +51,10 @@ function Login() {
             <button
               className="text-my-bgColor2  p-2 w-[8em] self-center bg-[#c9184a]  hover:border-slate-100 border rounded border-my-bgColor3 "
               type="submit"
-              onClick={handleSubmit}>
+              onClick={(event) => {
+                event.preventDefault()
+                login(userDetails , setAuth , navigate)
+              }}>
               Login{" "}
             </button>
           </form>
