@@ -4,6 +4,7 @@ import SearchFilter from "./SearchFilter"
 import RoomInfoContext from "../context/RoomInfoContext"
 import { removeBookingRoom } from "../functions/removeBookingRoom"
 import { removeRoom } from "../functions/removeRoom"
+import { NavLink } from "react-router-dom"
 
 function Hero() {
   const {
@@ -54,12 +55,12 @@ function Hero() {
               {bookingSummaryComponent.map((item) => {
                 const {
                   title,
-                
+
                   roomId,
                   roomPricePostDiscount,
                   totalNoOfRooms,
                 } = item.content.props.roomInfo
-                
+
                 return (
                   <div id={roomId} className="flex justify-between  ">
                     <div className=" basis-[14em] normal-case ">
@@ -71,7 +72,6 @@ function Hero() {
 
                     <div className=" basis-[8em] flex justify-between gap-2  items-center">
                       <span className="font-bold">
-                        
                         &#8377; {roomPricePostDiscount}
                       </span>
                       <span
@@ -102,7 +102,7 @@ function Hero() {
                 <i className="fa-solid fa-info pt-7" onClick={handleOpen}></i>
                 <span>
                   <p className="text-my-bgColor1 font-bold text-xl">
-                  &#8377; {totalAmount}
+                    &#8377; {totalAmount}
                   </p>
                   <p className="text-green-400">
                     {`${bookingSummaryComponent.length}  Room Added`}
@@ -112,7 +112,10 @@ function Hero() {
                   </p>
                 </span>
               </div>
-              <button className="bg-my-bgColor1 text-xl w-[7em]">Book</button>
+
+              <button className="bg-my-bgColor1 text-2xl w-[5em]">
+                <NavLink to="/payment">Book</NavLink>
+              </button>
             </section>
           </>
         ) : (
@@ -145,9 +148,11 @@ function Hero() {
                 <span className="font-thin">Total </span>
                 <span>&#8377;{totalAmount}</span>
               </p>
-              <button className="bg-my-bgColor1 text-[#fcf6f6] mt-4 mx-6 w-[15em] h-[2.5em]">
-                Book
-              </button>
+              <NavLink to={"/payment"}>
+                <button className="bg-my-bgColor1 text-[#fcf6f6] mt-4 mx-6 w-[15em] h-[2.5em]">
+                  Book
+                </button>
+              </NavLink>
             </>
           ) : (
             <>

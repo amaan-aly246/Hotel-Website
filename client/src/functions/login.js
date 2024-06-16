@@ -1,7 +1,6 @@
 import axios from "../config/axios.js"
 
-export const login = async (userDetails , setAuth,navigate) => {
-    // console.log(userDetails)
+export const login = async (userDetails , setAuth,navigate , from ) => {
     try {
         const response = await axios.post('/login',
             JSON.stringify(userDetails),
@@ -15,7 +14,7 @@ export const login = async (userDetails , setAuth,navigate) => {
             const { accessToken, username , email } = response.data
             setAuth({ accessToken, username, email })
             alert("Login  successful!! ")
-            navigate('/' , {replace: true})
+            navigate(from , {replace: true})
         }
     } catch (error) {
         if (!error.response) {

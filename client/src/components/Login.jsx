@@ -1,17 +1,18 @@
 import React, { useState } from "react"
 import { togglePasswordViewState } from "../functions/togglePasswordViewState.js"
 import { handleSetDetails } from "../functions/handleSetDetails.js"
-import { NavLink , useNavigate } from "react-router-dom"
+import { NavLink , useNavigate , useLocation } from "react-router-dom"
 import { login } from "../functions/login.js"
 import useAuth from '../hooks/useAuth.jsx'
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
   const { setAuth } = useAuth();
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
   })
-
   return (
     <>
       <div className="bg-[#c9184a]  h-screen ">
@@ -53,7 +54,7 @@ function Login() {
               type="submit"
               onClick={(event) => {
                 event.preventDefault()
-                login(userDetails , setAuth , navigate)
+                login(userDetails , setAuth , navigate , from )
               }}>
               Login{" "}
             </button>
