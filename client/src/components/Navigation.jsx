@@ -1,10 +1,10 @@
-import { React, useContext, useState } from "react"
+import { React,  useState } from "react"
 import { NavLink, Outlet } from "react-router-dom"
 import { logout } from "../functions/logout.js"
-import AuthContext from "../context/AuthProvider.jsx"
+import useAuth from "../hooks/useAuth.jsx"
 function Navigation() {
   const [hidden, setHidden] = useState(true)
-  const { setAuth, auth } = useContext(AuthContext)
+  const { setAuth, auth } = useAuth();
 
   return (
     <>
@@ -12,20 +12,20 @@ function Navigation() {
         className=" flex w-full justify-between bg-my-bgColor1 text-white  font-roboto-condensed
       cursor-pointer sticky top-0 z-50
     ">
-        <span className="ml-3 mt-4 text-3xl">BEST HOTELS </span>
+        <span className="ml-3 mt-4 text-3xl"><NavLink to={'/'}>BEST HOTELS</NavLink> </span>
         <nav>
           <ul className="mr-3 list-none flex gap-2 my-2 list capitalize   ">
-            <li className="hover:text-red-100 hidden sm:block ">
+            {/* <li className="hover:text-red-100 hidden sm:block ">
               <p>
                 <NavLink to={"/"}>
                   <i className="fa-solid fa-house px-6 underline "></i>
                 </NavLink>
               </p>{" "}
               hotel Info
-            </li>
+            </li> */}
             <li className="hover:text-red-100 px-4 hidden sm:block">
               {auth.accessToken == undefined ? (
-                <NavLink to="/login">
+                <NavLink to="/login" >
                   <p>
                     <i className="fa-solid fa-lock px-8 "></i>
                   </p>

@@ -1,12 +1,12 @@
-import React, { useState, useContext } from "react"
+import React, { useState } from "react"
 import { togglePasswordViewState } from "../functions/togglePasswordViewState.js"
 import { handleSetDetails } from "../functions/handleSetDetails.js"
 import { NavLink , useNavigate } from "react-router-dom"
-import AuthContext from "../context/AuthProvider.jsx"
 import { login } from "../functions/login.js"
+import useAuth from '../hooks/useAuth.jsx'
 function Login() {
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext)
+  const { setAuth } = useAuth();
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",

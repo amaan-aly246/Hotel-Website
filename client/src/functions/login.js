@@ -15,7 +15,7 @@ export const login = async (userDetails , setAuth,navigate) => {
             const { accessToken, username , email } = response.data
             setAuth({ accessToken, username, email })
             alert("Login  successful!! ")
-            navigate('/')
+            navigate('/' , {replace: true})
         }
     } catch (error) {
         if (!error.response) {
