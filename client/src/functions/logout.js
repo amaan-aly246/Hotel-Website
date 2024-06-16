@@ -1,4 +1,4 @@
-import axios from "../baseurl/axios.js";
+import axios from "../config/axios.js";
 
 export const logout = async (auth, setAuth) => {
     try {

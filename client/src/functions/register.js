@@ -1,4 +1,4 @@
-import axios from "../baseurl/axios.js"
+import axios from "../config/axios.js"
 export const register = async (userDetails, navigate) => {
     try {
         const response = await axios.post(
