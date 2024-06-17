@@ -1,18 +1,23 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { togglePasswordViewState } from "../functions/togglePasswordViewState.js"
 import { handleSetDetails } from "../functions/handleSetDetails.js"
-import { NavLink , useNavigate , useLocation } from "react-router-dom"
+import { NavLink, useNavigate, useLocation } from "react-router-dom"
 import { login } from "../functions/login.js"
-import useAuth from '../hooks/useAuth.jsx'
+import useAuth from "../hooks/useAuth.jsx"
 function Login() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || '/';
-  const { setAuth } = useAuth();
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || "/"
+  const { setAuth, persist, setPersist } = useAuth()
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
   })
+
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist)
+  }, [persist])
   return (
     <>
       <div className="bg-[#c9184a]  h-screen ">
@@ -49,14 +54,24 @@ function Login() {
                 className=" cursor-pointer  fa-regular fa-eye absolute right-4 top-3"
                 onClick={(event) => togglePasswordViewState(event)}></i>
             </span>
+            <p>
+              <input
+                type="checkbox"
+                id="persist"
+                checked={persist}
+                onChange={()=>{ setPersist((prev) => !prev)}}
+                className=""
+              />
+              <label htmlFor="persist" className="text-xl normal-case">trust this device</label>
+            </p>
             <button
-              className="text-my-bgColor2  p-2 w-[8em] self-center bg-[#c9184a]  hover:border-slate-100 border rounded border-my-bgColor3 "
+              className="text-my-bgColor2 p-2 w-[8em] self-center bg-[#c9184a]  hover:border-slate-100 border rounded border-my-bgColor3 "
               type="submit"
               onClick={(event) => {
                 event.preventDefault()
-                login(userDetails , setAuth , navigate , from )
-              }}>
-              Login{" "}
+                login(userDetails, setAuth, navigate, from)
+              }} >
+              Login
             </button>
           </form>
           <p className=" normal-case self-center text-my-bgColor2 ">
