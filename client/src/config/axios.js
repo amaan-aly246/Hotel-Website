@@ -1,5 +1,7 @@
 import axios from "axios"
-const BASE_URL = 'http://localhost:8000/api'
+// const BASE_URL = 'http://localhost:8000/api'
+const BASE_URL = 'https://hotel-website-1-9mlw.onrender.com'
+
 export default axios.create({
     baseURL: BASE_URL
 })

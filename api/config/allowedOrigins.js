@@ -1,7 +1,7 @@
 export const allowedOrigins = [
 
-    // 'https://hotel-websit.vercel.app',
-    // 'https://localhost:5173',
+    'https://hotel-websit.vercel.app/',
+
     'http://localhost:5173',
 
 ]
