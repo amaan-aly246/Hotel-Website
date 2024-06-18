@@ -1,3 +1,3 @@
-Website hosted using vercel : https://hotelwebsite01.vercel.app/
+Website hosted using vercel : https://hotel-websit.vercel.app
 
 This project is under development. :)
