@@ -27,6 +27,7 @@ const register = async (req, res) => {
 }
 const login = async (req, res) => {
     try {
+        console.log("login function in the backend  is called ")
         const { email, password } = req.body;
         const foundUser = await Users.findOne({ email });
 
@@ -38,6 +39,7 @@ const login = async (req, res) => {
 
         const match = await bcrypt.compareSync(password, foundUser.password);
         if (match) {
+            console.log("it matched")
             // create jwt token
             const accessToken = jwt.sign(
                 { "username": foundUser.username }, // payload
