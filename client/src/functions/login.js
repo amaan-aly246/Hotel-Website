@@ -5,7 +5,7 @@ export const login = async (userDetails , setAuth,navigate , from ) => {
         const response = await axios.post('/login',
             JSON.stringify(userDetails),
             {
-                headers: { 'Content-Type': "application/json" },
+                headers: { 'Content-Type ': "application/json" },
                 withCredentials: true
             }
         )
