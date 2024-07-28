@@ -1,8 +1,9 @@
 import axios from "axios"
-// during development
-// const BASE_URL = 'http://localhost:8000/api'
-const BASE_URL = 'https://hotel-website-1-9mlw.onrender.com/api'
+// Determine the base URL based on the environment
 
+const BASE_URL = process.env.NODE_ENV === 'development' 
+  ? process.env.REACT_APP_BASE_URL_DEV 
+  : process.env.REACT_APP_BASE_URL_PROD;
 
 export default axios.create({
     baseURL: BASE_URL

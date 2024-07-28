@@ -26,6 +26,7 @@ const register = async (req, res) => {
 
 }
 const login = async (req, res) => {
+    console.log("login function");
     try {
         console.log("login function in the backend  is called ")
         const { email, password } = req.body;
@@ -71,6 +72,7 @@ const login = async (req, res) => {
        
     }
 }
+
 const logout = async (req, res) => {
     try {
         const cookies = req.cookies;
