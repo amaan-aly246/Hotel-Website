@@ -1,30 +1,28 @@
 import Users from "../models/users.js"
-import bcrypt, { compareSync } from 'bcrypt';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { config } from "dotenv";
 config();
 const saltRound = 10;
 const register = async (req, res) => {
-    console.log("register ")
-    res.sendStatus(200)
-    // try {
-    //     const email = await Users.findOne({ email: req.body.email });
-    //     if (email) {
-    //         return res.sendStatus(409) // user already exist
-    //     }
-    //     const salt = bcrypt.genSaltSync(saltRound);
-    //     const password = bcrypt.hashSync(req.body.password, salt);
-    //     const userData = {
-    //         "username": req.body.username,
-    //         "email": req.body.email,
-    //         "password": password
-    //     }
-    //     await Users.create(userData)
-    //     return res.sendStatus(201).json({ message: `user is created successfully ` });
-    // } catch (error) {
-    //     console.log(error?.message);
+    try {
+        const email = await Users.findOne({ email: req.body.email });
+        if (email) {
+            return res.sendStatus(409) // user already exist
+        }
+        const salt = bcrypt.genSaltSync(saltRound);
+        const password = bcrypt.hashSync(req.body.password, salt);
+        const userData = {
+            "username": req.body.username,
+            "email": req.body.email,
+            "password": password
+        }
+        await Users.create(userData)
+        return res.sendStatus(201).json({ message: `user is created successfully ` });
+    } catch (error) {
+        console.log(error?.message);
 
-    // }
+    }
 
 }
 const login = async (req, res) => {
