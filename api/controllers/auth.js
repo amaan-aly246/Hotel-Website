@@ -5,28 +5,29 @@ import { config } from "dotenv";
 config();
 const saltRound = 10;
 const register = async (req, res) => {
-    try {
-        const email = await Users.findOne({ email: req.body.email });
-        if (email) {
-            return res.sendStatus(409) // user already exist
-        }
-        const salt = bcrypt.genSaltSync(saltRound);
-        const password = bcrypt.hashSync(req.body.password, salt);
-        const userData = {
-            "username": req.body.username,
-            "email": req.body.email,
-            "password": password
-        }
-        await Users.create(userData)
-        return res.sendStatus(201).json({ message: `user is created successfully ` });
-    } catch (error) {
-        console.log(error?.message);
+    console.log("register ")
+    res.sendStatus(200)
+    // try {
+    //     const email = await Users.findOne({ email: req.body.email });
+    //     if (email) {
+    //         return res.sendStatus(409) // user already exist
+    //     }
+    //     const salt = bcrypt.genSaltSync(saltRound);
+    //     const password = bcrypt.hashSync(req.body.password, salt);
+    //     const userData = {
+    //         "username": req.body.username,
+    //         "email": req.body.email,
+    //         "password": password
+    //     }
+    //     await Users.create(userData)
+    //     return res.sendStatus(201).json({ message: `user is created successfully ` });
+    // } catch (error) {
+    //     console.log(error?.message);
 
-    }
+    // }
 
 }
 const login = async (req, res) => {
-    console.log("login function");
     try {
         console.log("login function in the backend  is called ")
         const { email, password } = req.body;
@@ -40,7 +41,6 @@ const login = async (req, res) => {
 
         const match = await bcrypt.compareSync(password, foundUser.password);
         if (match) {
-            console.log("it matched")
             // create jwt token
             const accessToken = jwt.sign(
                 { "username": foundUser.username }, // payload

@@ -30,10 +30,9 @@ app.use(cookieParser());
 
 
 //Routes 
-
+app.use('/api', auth);
 app.use('/api', rooms);
 app.use('/api', users);
-app.use('/api', auth);
 
 
 const start = async () => {
