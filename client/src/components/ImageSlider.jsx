@@ -6,7 +6,7 @@ function ImageSlider() {
     <>
     {/* slide className */}
     
-        <section className=" h-60  sm:h-72 w-full whitespace-nowrap group  overflow-x-hidden " >
+        <section className="slide h-60  sm:h-72 w-full whitespace-nowrap group  overflow-x-hidden " >
           <div
             className={`  h-full  inline-block  group-hover:pause-animation  `}>
             {images.map((img) => {
